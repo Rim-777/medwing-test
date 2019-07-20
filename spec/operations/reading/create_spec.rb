@@ -30,6 +30,13 @@ RSpec.describe Reading::Create do
       expect(operation[:result]).to eq({tracking_number: 1})
     end
 
+    it 'adds a reading in the database as a background job process' do
+      expect(ReadingsDbSavingJob).to receive(:perform_later).once.with(
+          thermostat, Hash[:temperature, 16.5, :humidity, 14.7, :battery_charge, 33.18, :tracking_number, 1]
+      )
+      operation
+    end
+
     it 'adds a reading in the database' do
       expect {operation}.to change(Reading, :count).by(1)
     end
@@ -45,7 +52,7 @@ RSpec.describe Reading::Create do
         let(:reading_attributes) {Hash[:humidity, 14.7, :battery_charge, 33.18]}
 
         it_behaves_like 'InvalidReadingParams' do
-          let(:error_context){{temperature:["is missing"]}}
+          let(:error_context) {{temperature: ["is missing"]}}
         end
       end
 
@@ -54,7 +61,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{:temperature=>["must be a float"]}}
+            let(:error_context) {{:temperature => ["must be a float"]}}
           end
         end
 
@@ -62,7 +69,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{:temperature=>["must be a float"]}}
+            let(:error_context) {{:temperature => ["must be a float"]}}
           end
         end
       end
@@ -73,7 +80,7 @@ RSpec.describe Reading::Create do
         let(:reading_attributes) {Hash[:temperature, 16.5, :battery_charge, 33.18]}
 
         it_behaves_like 'InvalidReadingParams' do
-          let(:error_context){{humidity: ["is missing"]}}
+          let(:error_context) {{humidity: ["is missing"]}}
         end
       end
 
@@ -82,7 +89,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 'some string', :battery_charge, 33.18]}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{humidity: ["must be a float"]}}
+            let(:error_context) {{humidity: ["must be a float"]}}
           end
         end
 
@@ -90,7 +97,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, nil, :battery_charge, 33.18]}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{humidity: ["must be a float"]}}
+            let(:error_context) {{humidity: ["must be a float"]}}
           end
         end
       end
@@ -101,7 +108,7 @@ RSpec.describe Reading::Create do
         let(:reading_attributes) {Hash[:temperature, 16.5, :humidity, 14.7]}
 
         it_behaves_like 'InvalidReadingParams' do
-          let(:error_context){{battery_charge: ["is missing"]}}
+          let(:error_context) {{battery_charge: ["is missing"]}}
         end
       end
 
@@ -110,7 +117,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 14.7, :battery_charge, 'some string']}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{battery_charge: ["must be a float"]}}
+            let(:error_context) {{battery_charge: ["must be a float"]}}
           end
         end
 
@@ -118,7 +125,7 @@ RSpec.describe Reading::Create do
           let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 14.7, :battery_charge, nil]}
 
           it_behaves_like 'InvalidReadingParams' do
-            let(:error_context){{battery_charge: ["must be a float"]}}
+            let(:error_context) {{battery_charge: ["must be a float"]}}
           end
         end
       end

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     version 1 do
       cache as: 'v1' do
         resource :readings, only: :create
+        get '/readings/:tracking_number', to: 'readings#show', as: 'readings_show'
       end
     end
   end
