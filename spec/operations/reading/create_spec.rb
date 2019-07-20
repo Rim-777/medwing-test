@@ -40,67 +40,86 @@ RSpec.describe Reading::Create do
   end
 
   context 'invalid params' do
-    context 'missing the temperature field' do
-      let(:reading_attributes) {Hash[:humidity, 14.7, :battery_charge, 33.18]}
+    context 'temperature' do
+      context 'missing field' do
+        let(:reading_attributes) {Hash[:humidity, 14.7, :battery_charge, 33.18]}
 
-      it 'returns failure' do
-        expect(operation.failure?).to be_truthy
+        it_behaves_like 'InvalidReadingParams' do
+          let(:error_context){{temperature:["is missing"]}}
+        end
       end
 
-      it "doesn't cache a reading attributes" do
-        operation
-        expect(Rails.cache.fetch(thermostat.household_token)).to be_nil
-      end
+      context 'incorrect value types' do
+        context 'string' do
+          let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
 
-      it 'adds an error message to operation errors' do
-        expect(operation[:errors]).to eq({:temperature=>["is missing"]})
-      end
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{:temperature=>["must be a float"]}}
+          end
+        end
 
-      it "doesn't add a new reading in the database" do
-        expect {operation}.to_not change(Reading, :count)
+        context 'nil' do
+          let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
+
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{:temperature=>["must be a float"]}}
+          end
+        end
       end
     end
 
-    context 'incorrect value types for the temperature field' do
-      context 'string' do
-        let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
+    context 'humidity' do
+      context 'missing field' do
+        let(:reading_attributes) {Hash[:temperature, 16.5, :battery_charge, 33.18]}
 
-        it 'returns failure' do
-          expect(operation.failure?).to be_truthy
-        end
-
-        it "doesn't cache a reading attributes" do
-          operation
-          expect(Rails.cache.fetch(thermostat.household_token)).to be_nil
-        end
-
-        it 'adds an error message to operation errors' do
-          expect(operation[:errors]).to eq({:temperature=>["must be a float"]})
-        end
-
-        it "doesn't add a new reading in the database" do
-          expect {operation}.to_not change(Reading, :count)
+        it_behaves_like 'InvalidReadingParams' do
+          let(:error_context){{humidity: ["is missing"]}}
         end
       end
 
-      context 'nil' do
-        let(:reading_attributes) {Hash[:temperature, "some string value", :humidity, 14.7, :battery_charge, 33.18]}
+      context 'incorrect value types' do
+        context 'string' do
+          let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 'some string', :battery_charge, 33.18]}
 
-        it 'returns failure' do
-          expect(operation.failure?).to be_truthy
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{humidity: ["must be a float"]}}
+          end
         end
 
-        it "doesn't cache a reading attributes" do
-          operation
-          expect(Rails.cache.fetch(thermostat.household_token)).to be_nil
+        context 'nil' do
+          let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, nil, :battery_charge, 33.18]}
+
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{humidity: ["must be a float"]}}
+          end
+        end
+      end
+    end
+
+    context 'battery_charge' do
+      context 'missing field' do
+        let(:reading_attributes) {Hash[:temperature, 16.5, :humidity, 14.7]}
+
+        it_behaves_like 'InvalidReadingParams' do
+          let(:error_context){{battery_charge: ["is missing"]}}
+        end
+      end
+
+      context 'incorrect value types' do
+        context 'string' do
+          let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 14.7, :battery_charge, 'some string']}
+
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{battery_charge: ["must be a float"]}}
+          end
         end
 
-        it 'adds an error message to operation errors' do
-          expect(operation[:errors]).to eq({:temperature=>["must be a float"]})
-        end
+        context 'nil' do
+          let(:reading_attributes) {Hash[:temperature, 22.3, :humidity, 14.7, :battery_charge, nil]}
 
-        it "doesn't add a new reading in the database" do
-          expect {operation}.to_not change(Reading, :count)
+          it_behaves_like 'InvalidReadingParams' do
+            let(:error_context){{battery_charge: ["must be a float"]}}
+          end
         end
       end
     end
