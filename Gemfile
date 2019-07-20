@@ -11,6 +11,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rack-cors'
 gem 'sidekiq'
 gem 'sinatra', github: 'sinatra/sinatra', branch: 'master' , require: nil
+gem 'trailblazer'
 gem "trailblazer-operation"
 gem 'api-versions', '~> 1.2', '>= 1.2.1'
 gem 'dry-validation', '~> 0.1.0'
