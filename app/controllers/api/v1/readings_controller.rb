@@ -5,6 +5,7 @@ module Api::V1
     def create
       operation = Reading::Create.({reading_attributes: reading_params, thermostat: thermostat})
       if operation.success?
+        Thermostat::Stats::Add.(operation[:result].merge(thermostat: thermostat))
         render json: operation[:result], status: :created
       else
         render json: operation[:errors], status: 422

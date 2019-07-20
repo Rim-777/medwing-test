@@ -36,14 +36,6 @@ RSpec.describe Reading::Create do
       )
       operation
     end
-
-    it 'adds a reading in the database' do
-      expect {operation}.to change(Reading, :count).by(1)
-    end
-
-    it 'adds a reading in the database related to the thermostat' do
-      expect {operation}.to change(thermostat.readings, :count).by(1)
-    end
   end
 
   context 'invalid params' do
