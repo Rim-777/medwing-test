@@ -5,6 +5,6 @@ class Thermostat::Stats::Get < Trailblazer::Operation
   private
 
   def perform(options, params:)
-    options[:result] = Rails.cache.fetch(params[:thermostat].household_token)[:stats]
+    options[:result] = Rails.cache.fetch(params[:thermostat].household_token).try(:fetch, :stats, nil)
   end
 end
