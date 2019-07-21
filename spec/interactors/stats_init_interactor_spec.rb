@@ -14,14 +14,14 @@ RSpec.describe StatsInitInteractor do
     end
   end
 
-  describe '#initial_stats' do
+  describe '#call' do
     it 'returns a hash with battery_charge, humidity, temperature keys' do
       expected_hash = Hash[
           :temperature, Hash[:average, 16.5, :min, 16.5, :max, 16.5],
           :humidity, Hash[:average, 14.7, :min, 14.7, :max, 14.7],
           :battery_charge, Hash[:average, 33.18, :min, 33.18, :max, 33.18],
       ]
-      expect(interactor.initial_stats).to eq expected_hash
+      expect(interactor.call).to eq expected_hash
     end
   end
 end

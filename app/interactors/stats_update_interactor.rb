@@ -5,7 +5,7 @@ class StatsUpdateInteractor
     @reading_attributes = reading_attributes
   end
 
-  def updated_stats
+  def call
     stats = @thermostat_cache[:stats]
     stats.each do |key, value|
       stats[key] = updated_stats_item(value, @reading_attributes[key])

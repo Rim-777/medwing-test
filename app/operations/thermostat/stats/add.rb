@@ -8,7 +8,7 @@ class Thermostat::Stats::Add < Trailblazer::Operation
   def init(params:)
     @household_token = params[:thermostat].household_token
     @thermostat_cache = Rails.cache.fetch(@household_token)
-    @reading = @thermostat_cache[:readings][params[:tracking_number]]
+    @reading_attributes = @thermostat_cache[:readings][params[:tracking_number]]
   end
 
   def update_stats(options)
@@ -18,9 +18,9 @@ class Thermostat::Stats::Add < Trailblazer::Operation
 
   def counted_stats
     if @thermostat_cache[:stats]
-      StatsUpdateInteractor.new(@thermostat_cache, @reading).updated_stats
+      StatsUpdateInteractor.new(@thermostat_cache, @reading_attributes).call
     else
-      StatsInitInteractor.new(@reading).initial_stats
+      StatsInitInteractor.new(@reading_attributes).call
     end
   end
 end

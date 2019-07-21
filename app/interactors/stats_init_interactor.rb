@@ -4,7 +4,7 @@ class StatsInitInteractor
     @reading_attributes = reading_attributes
   end
 
-  def initial_stats
+  def call
     Hash[
         :temperature, as_stats(@reading_attributes[:temperature]),
         :humidity, as_stats(@reading_attributes[:humidity]),
