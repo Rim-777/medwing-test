@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe StatsInitInteractor do
   let(:reading_attributes) do
     Hash[:battery_charge, 33.18, :humidity, 14.7, :temperature, 16.5]

@@ -9,3 +9,4 @@
 .idea
 database.yml
 /config/master.key
+dump.rdb

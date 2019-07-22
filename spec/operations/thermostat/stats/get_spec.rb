@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe Thermostat::Stats::Get  do
   let!(:thermostat) do
     create(:thermostat, address: 'Berlin, Friedrichstrasse st. 77', household_token: 'vtyzdpzkbdmedwing')

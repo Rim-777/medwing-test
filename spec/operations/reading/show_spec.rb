@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe Reading::Show do
   let!(:thermostat) do
     create(:thermostat, address: 'Berlin, Friedrichstrasse st. 77', household_token: 'vtyzdpzkbdmedwing')
@@ -46,7 +45,7 @@ RSpec.describe Reading::Show do
 
   context 'required reading does not exists' do
     let(:operation) do
-      Reading::Show.({tracking_number: 3, thermostat: thermostat})
+      Reading::Show.({tracking_number: 355, thermostat: thermostat})
     end
 
     it 'returns failure' do

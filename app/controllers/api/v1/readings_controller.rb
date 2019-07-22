@@ -1,6 +1,5 @@
 module Api::V1
   class ReadingsController < BaseController
-    before_action :authenticate_thermostat!
 
     def create
       operation = Reading::Create.({reading_attributes: reading_params, thermostat: thermostat})

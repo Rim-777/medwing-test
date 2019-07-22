@@ -1,24 +1,48 @@
-# README
+## Thermostats tracking Api
+Ruby Rails application for REST API with Trailblazer Operations,
+ActiveRecord, RSpec
+### Dependencies:
+- Ruby 5.2.2
+- PostgreSQL
+- Redis
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Installation:
+- Clone poject
+- Run bundler:
 
-Things you may want to cover:
+ ```shell
+ $ bundle install
+ ```
+- Create database.yml:
+```shell
+$ cp config/database.yml.sample config/database.yml
+```
 
-* Ruby version
+- Run application:
 
-* System dependencies
+ ```shell
+ $ rails server
+ ```
+- Run Redis server (in another terminal window):
 
-* Configuration
+ ```shell
+ $ redis-server
+ ```
+- Run background engine (in another terminal window):
+ 
+```shell
+$ sidekiq
+ ```
+ 
+##### Tests:
 
-* Database creation
+To execute tests, run following commands:
+ 
+```shell
+ $ bundle exec rake db:migrate RAILS_ENV=test #(the first time only)
+ $ bundle exec rspec
+```
 
-* Database initialization
+### License
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The software is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

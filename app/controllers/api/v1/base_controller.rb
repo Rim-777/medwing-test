@@ -1,6 +1,7 @@
 module Api::V1
   class BaseController < ActionController::API
     attr_reader :thermostat
+    before_action :authenticate_thermostat!
 
     private
 

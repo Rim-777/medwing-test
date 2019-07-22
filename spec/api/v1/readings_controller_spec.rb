@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe Api::V1::ReadingsController do
   let!(:thermostat) do
     create(:thermostat, address: 'Berlin, Friedrichstrasse st. 77', household_token: 'vtyzdpzkbdmedwing')
@@ -35,15 +34,8 @@ RSpec.describe Api::V1::ReadingsController do
     context 'failure' do
       context 'unauthorized thermostat' do
         let(:params) {Hash[:temperature, 16.5, :humidity, 14.7, :battery_charge, 33.18]}
-        before {post '/api/readings', params: params, headers: {}, xhr: true}
-
-        it 'returns failure with  the unauthorized status' do
-          expect(response.status).to eq 401
-        end
-
-        it 'returns an empty response body' do
-          expect(response.body).to be_empty
-        end
+        let(:headers){{}}
+        it_behaves_like 'UnouthorizedThermostat'
       end
 
       context 'invalid field' do

@@ -1,5 +1,4 @@
 require 'rails_helper'
-
 RSpec.describe Api::V1::ThermostatsController do
   let!(:thermostat) do
     create(:thermostat, address: 'Berlin, Friedrichstrasse st. 77', household_token: 'vtyzdpzkbdmedwing')
@@ -14,7 +13,6 @@ RSpec.describe Api::V1::ThermostatsController do
     let(:headers) {Hash['X-Household-Token', thermostat.household_token]}
 
     context 'success' do
-
       context 'stats exist' do
         let(:thermostat_cache) do
           Hash[
@@ -47,7 +45,6 @@ RSpec.describe Api::V1::ThermostatsController do
       end
 
       context 'stats does not exist' do
-
         it_behaves_like 'SuccessfulResponse'
 
         it 'returns null as response body' do
@@ -60,14 +57,7 @@ RSpec.describe Api::V1::ThermostatsController do
     context 'failure' do
       context 'unauthorized thermostat' do
         let(:headers) {{}}
-
-        it 'returns failure with  the unauthorized status' do
-          expect(response.status).to eq 401
-        end
-
-        it 'returns an empty response body' do
-          expect(response.body).to be_empty
-        end
+        it_behaves_like 'UnouthorizedThermostat'
       end
     end
   end

@@ -8,9 +8,7 @@ class Reading::Show < Trailblazer::Operation
     tracking_number = params[:tracking_number].to_i
     thermostat = params[:thermostat]
     options[:result] = Rails.cache.fetch(thermostat.household_token)
-                           .try(:fetch, :readings)
-                           .try(:fetch, tracking_number)
-  rescue KeyError
-    thermostat.readings.find_by_tracking_number(tracking_number)
+                           .try(:fetch, :readings, nil )
+                           .try(:fetch, tracking_number, nil )
   end
 end

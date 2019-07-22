@@ -7,7 +7,6 @@ Rails.application.routes.draw do
         resource :readings, only: :create
         get '/readings/:tracking_number', to: 'readings#show', as: 'readings_show'
         get '/thermostats/stats', to: 'thermostats#stats', as: 'thermostats_stats'
-
       end
     end
   end
