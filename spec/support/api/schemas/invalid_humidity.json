@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "required": [
+    "humidity"
+  ],
+  "properties": {
+    "humidity": {
+      "type": "array"
+    }
+  }
+}

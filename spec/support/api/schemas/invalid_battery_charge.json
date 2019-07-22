@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "required": [
+    "battery_charge"
+  ],
+  "properties": {
+    "battery_charge": {
+      "type": "array"
+    }
+  }
+}

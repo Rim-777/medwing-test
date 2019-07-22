@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "required": [
+    "tracking_number"
+  ],
+  "properties": {
+    "tracking_number": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": [
+    "temperature",
+    "humidity",
+    "battery_charge",
+    "tracking_number"
+  ],
+  "properties": {
+    "temperature": {
+      "type": "number"
+    },
+    "humidity": {
+      "type": "number"
+    },
+    "battery_charge": {
+      "type": "number"
+    },
+    "tracking_number": {
+      "type": "integer"
+    }
+  }
+}
