@@ -10,6 +10,7 @@ RSpec.describe Thermostat::Stats::Add  do
   end
 
   before do
+    Rails.cache.clear
     Rails.cache.write(thermostat.household_token, thermostat_cache)
   end
 

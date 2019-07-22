@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "required": [
+    "temperature",
+    "humidity",
+    "battery_charge"
+  ],
+  "properties": {
+    "temperature": {
+      "type": "object",
+      "required": [
+        "min",
+        "max",
+        "average"
+      ],
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "average": {
+          "type": "number"
+        }
+      }
+    },
+    "humidity": {
+      "type": "object",
+      "required": [
+        "min",
+        "max",
+        "average"
+      ],
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "average": {
+          "type": "number"
+        }
+      }
+    },
+    "battery_charge": {
+      "type": "object",
+      "required": [
+        "min",
+        "max",
+        "average"
+      ],
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        },
+        "average": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

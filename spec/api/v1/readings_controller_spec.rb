@@ -106,7 +106,14 @@ RSpec.describe Api::V1::ReadingsController do
       Hash[
           :readings,
           Hash[
-              1, Hash[:temperature, 20.0, :humidity, 10.0, :battery_charge, 50.0, :tracking_number, 1]
+              1, Hash[:temperature, 20.0, :humidity, 10.0, :battery_charge, 50.0, :tracking_number, 1],
+              2, Hash[:temperature, 30.0, :humidity, 20.0, :battery_charge, 30.0, :tracking_number, 2]
+          ],
+          :stats,
+          Hash[
+              :temperature, Hash[:min, 20.0, :max, 30.0, :average, 25.0],
+              :humidity, Hash[:min, 10.0, :max, 20.0, :average, 15.0],
+              :battery_charge, Hash[:min, 30.0, :max, 50.0, :average, 40.0]
           ]
       ]
     end
@@ -126,7 +133,7 @@ RSpec.describe Api::V1::ReadingsController do
     end
 
     context 'failure' do
-      before {get "/api/readings/2", headers: headers, xhr: true}
+      before {get "/api/readings/123", headers: headers, xhr: true}
 
       it 'returns failure with  the not found status' do
         expect(response.status).to eq 404

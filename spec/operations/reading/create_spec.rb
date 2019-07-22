@@ -9,8 +9,8 @@ RSpec.describe Reading::Create do
   end
 
   before do
-    allow(Rails.cache).to receive(:increment).with(:tracking_number, 1).and_return(1)
     Rails.cache.clear
+    allow(Rails.cache).to receive(:increment).with(:tracking_number, 1).and_return(1)
   end
 
   context 'valid params' do

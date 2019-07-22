@@ -17,6 +17,7 @@ RSpec.describe Reading::Show do
   end
 
   before do
+    Rails.cache.clear
     Rails.cache.write(
         thermostat.household_token,
         Hash[:readings,
